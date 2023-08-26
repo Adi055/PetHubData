@@ -10,10 +10,10 @@ const userRouter=express.Router();
 userRouter.post("/register",async(req,res)=>{
 const {FirstName,LastName,email,password}=req.body
 const uppercaseRegex = /[A-Z]/;
-    const numberRegex = /[0-9]/;
+   
     const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
     
-    if (!uppercaseRegex.test(password) || !numberRegex.test(password) || !specialCharRegex.test(password) || password.length >= 6) {
+    if (!uppercaseRegex.test(password) || !specialCharRegex.test(password) || password.length <= 6) {
         return res.status(400).send({ error: 'password is invalid' });
     }
 try {
@@ -28,7 +28,7 @@ try {
         else{
             const user=new userModel({FirstName,LastName,email,password:hash});
             await user.save()
-            res.json({"msg":"user has been successfully registered",user:req.body})
+            res.status(200).send({"msg":"user has been successfully registered",user:req.body})
         }
     })
 
