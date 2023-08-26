@@ -14,7 +14,7 @@ try {
 }
 })
 
-petRouter.post("/add",async(req,res)=>{
+petRouter.post("/add",auth,async(req,res)=>{
 
 try {
     const user=new petModel(req.body)
@@ -27,7 +27,7 @@ try {
 })
 
 
-petRouter.patch("/update/:id",async(req,res)=>{
+petRouter.patch("/update/:id",auth,async(req,res)=>{
     const {id}=req.params
     const pet=await petModel.findOne({_id:id});
 try {
@@ -44,7 +44,7 @@ try {
 }
 })
 
-petRouter.delete("/delete/:id",async(req,res)=>{
+petRouter.delete("/delete/:id",auth,async(req,res)=>{
 const {id}=req.params;
 const pet = await petModel.findOne({_id:id})
 try {
